@@ -3,22 +3,20 @@ class Solution {
 
         int n = names.length;
 
+        HashMap<Integer, String> map = new HashMap<>();
+
         for (int i = 0; i < n; i++) {
-            for (int j = i + 1; j < n; j++) {
-
-                if (heights[i] < heights[j]) {
-
-                    int tempHeight = heights[i];
-                    heights[i] = heights[j];
-                    heights[j] = tempHeight;
-
-                    String tempName = names[i];
-                    names[i] = names[j];
-                    names[j] = tempName;
-                }
-            }
+            map.put(heights[i], names[i]);
         }
 
-        return names;
+        Arrays.sort(heights);
+
+        String[] ans = new String[n];
+
+        for (int i = 0; i < n; i++) {
+            ans[i] = map.get(heights[n - 1 - i]);
+        }
+
+        return ans;
     }
 }
