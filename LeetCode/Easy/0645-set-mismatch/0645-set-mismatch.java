@@ -1,26 +1,32 @@
 class Solution {
-    public int[] findErrorNums(int[] nums) {
-        int duplicate = -1;
-        int missing = -1;
+public int[] findErrorNums(int[] nums) {
+int n = nums.length;
+int i = 0;
 
-       
-        for (int num : nums) {
-            int index = Math.abs(num) - 1;
-            if (nums[index] < 0) {
-                duplicate = Math.abs(num);
-            } else {
-                nums[index] = -nums[index];
-            }
+
+    // Step 1: Cyclic Sort
+    while (i < n) {
+        int correctIndex = nums[i] - 1;
+
+        if (nums[i] != nums[correctIndex]) {
+            // Swap
+            int temp = nums[i];
+            nums[i] = nums[correctIndex];
+            nums[correctIndex] = temp;
+        } else {
+            i++;
         }
-
-  
-        for (int i = 0; i < nums.length; i++) {
-            if (nums[i] > 0) {
-                missing = i + 1;
-                break;
-            }
-        }
-
-        return new int[] { duplicate, missing };
     }
+
+    // Step 2: Find duplicate and missing number
+    for (int j = 0; j < n; j++) {
+        if (nums[j] != j + 1) {
+            return new int[]{nums[j], j + 1};
+        }
+    }
+
+    return new int[]{};
+}
+
+
 }
