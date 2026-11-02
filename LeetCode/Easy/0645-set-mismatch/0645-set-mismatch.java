@@ -4,7 +4,6 @@ int n = nums.length;
 int i = 0;
 
 
-    // Step 1: Cyclic Sort
     while (i < n) {
         int correctIndex = nums[i] - 1;
 
@@ -18,7 +17,7 @@ int i = 0;
         }
     }
 
-    // Step 2: Find duplicate and missing number
+ 
     for (int j = 0; j < n; j++) {
         if (nums[j] != j + 1) {
             return new int[]{nums[j], j + 1};
