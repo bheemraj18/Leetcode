@@ -1,31 +1,47 @@
 class Solution {
-public int[] findErrorNums(int[] nums) {
-int n = nums.length;
-int i = 0;
+    public int[] findErrorNums(int[] nums) {
 
+        int n = nums.length;
+        int xor = 0;
 
-    while (i < n) {
-        int correctIndex = nums[i] - 1;
-
-        if (nums[i] != nums[correctIndex]) {
-            // Swap
-            int temp = nums[i];
-            nums[i] = nums[correctIndex];
-            nums[correctIndex] = temp;
-        } else {
-            i++;
+      
+        for (int num : nums) {
+            xor ^= num;
         }
-    }
 
- 
-    for (int j = 0; j < n; j++) {
-        if (nums[j] != j + 1) {
-            return new int[]{nums[j], j + 1};
+        for (int i = 1; i <= n; i++) {
+            xor ^= i;
         }
+
+        int bit = xor & -xor;
+
+        int a = 0, b = 0;
+
+        
+        for (int num : nums) {
+            if ((num & bit) != 0)
+                a ^= num;
+            else
+                b ^= num;
+        }
+
+        for (int i = 1; i <= n; i++) {
+            if ((i & bit) != 0)
+                a ^= i;
+            else
+                b ^= i;
+        }
+
+        
+        for (int num : nums) {
+            if (num == a) {
+                return new int[]{a, b};
+            }
+            if (num == b) {
+                return new int[]{b, a};
+            }
+        }
+
+        return new int[]{};
     }
-
-    return new int[]{};
-}
-
-
 }
